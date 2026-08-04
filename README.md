@@ -6,9 +6,9 @@ review ambiguous findings.
 
 ## Current milestone
 
-Milestones 1 and 2 provide URL safety, limited same-hostname crawling,
-structured text extraction, LanguageTool checking, PostgreSQL persistence,
-scan progress endpoints, issue filters, and CSV export.
+The MVP provides URL safety, limited same-hostname crawling, structured text
+extraction, LanguageTool checking, PostgreSQL persistence, a two-screen React
+report, CSV export, and optional Ollama review for word-choice findings.
 
 ## Requirements
 
@@ -39,7 +39,14 @@ Run the basic API:
 npm run dev
 ```
 
-Then open `http://localhost:4000/api/health`.
+In another terminal, run the frontend:
+
+```bash
+npm run dev:web
+```
+
+Open `http://localhost:5173`. The API health endpoint is available at
+`http://localhost:4000/api/health`.
 
 Start a stored scan:
 
@@ -48,5 +55,19 @@ curl -X POST http://localhost:4000/api/scans \
   -H 'content-type: application/json' \
   -d '{"startUrl":"https://example.com"}'
 ```
+
+## Optional Ollama review
+
+LanguageTool works without an AI model. To review contextual word-choice
+findings with a local Ollama model, set these values in `.env`:
+
+```env
+OLLAMA_ENABLED=true
+OLLAMA_URL=http://localhost:11434
+OLLAMA_MODEL=qwen3.5:4b
+```
+
+If Ollama is unavailable or returns invalid JSON, the scan keeps the original
+LanguageTool result and continues.
 
 See `AGENTS.md` for the complete, intentionally limited MVP scope.

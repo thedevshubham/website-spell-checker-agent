@@ -376,7 +376,7 @@ Add Ollama only after the crawler-to-LanguageTool path works end to end.
 ```env
 OLLAMA_ENABLED=false
 OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=qwen3:8b
+OLLAMA_MODEL=qwen3.5:4b
 OLLAMA_TIMEOUT_MS=30000
 ```
 
@@ -486,7 +486,7 @@ LANGUAGETOOL_URL=http://localhost:8010
 LANGUAGETOOL_TIMEOUT_MS=15000
 OLLAMA_ENABLED=false
 OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=qwen3:8b
+OLLAMA_MODEL=qwen3.5:4b
 OLLAMA_TIMEOUT_MS=30000
 CRAWL_MAX_PAGES=10
 PAGE_TIMEOUT_MS=30000

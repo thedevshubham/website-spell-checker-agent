@@ -1,6 +1,7 @@
 import { db } from "./db.js";
 import { crawlWebsite } from "./crawler.js";
 import { checkBlock, deduplicateFindings, type LanguageToolFinding } from "./languagetool.js";
+import { reviewFinding, shouldReviewFinding } from "./ollama.js";
 import { assertPublicUrl, normalizeUrl } from "./url-safety.js";
 
 export async function startScan(input: string) {
@@ -46,20 +47,32 @@ async function processScan(scanId: string, startUrl: string): Promise<void> {
           findings.push(...await checkBlock(block));
         }
         const uniqueFindings = deduplicateFindings(findings);
+        const reviewedFindings: Array<LanguageToolFinding & { source: "languagetool" | "hybrid" }> = [];
 
-        if (uniqueFindings.length > 0) {
+        for (const finding of uniqueFindings) {
+          const review = await reviewFinding(finding);
+          if (review && !review.isLikelyIssue) continue;
+
+          reviewedFindings.push({
+            ...finding,
+            suggestion: review?.suggestion ?? finding.suggestion,
+            category: review?.category ?? finding.category,
+            source: review && shouldReviewFinding(finding) ? "hybrid" : "languagetool"
+          });
+        }
+
+        if (reviewedFindings.length > 0) {
           await db.issue.createMany({
-            data: uniqueFindings.map((finding) => ({
+            data: reviewedFindings.map((finding) => ({
               scanId,
               pageId: page.id,
               pageUrl: crawledPage.url,
-              ...finding,
-              source: "languagetool"
+              ...finding
             }))
           });
         }
 
-        await finishPage(scanId, page.id, "completed", null, uniqueFindings.length);
+        await finishPage(scanId, page.id, "completed", null, reviewedFindings.length);
       } catch (error) {
         const message = error instanceof Error ? error.message : "Page checking failed";
         await finishPage(scanId, page.id, "failed", message, 0);

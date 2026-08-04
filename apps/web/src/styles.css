@@ -1,0 +1,64 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #17211b;
+  background: #f5f6f2;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input, select { font: inherit; }
+a { color: #176447; }
+
+.home { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+.hero { width: min(760px, 100%); }
+.eyebrow { color: #176447; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+h1 { font-size: clamp(36px, 7vw, 68px); line-height: 1.02; letter-spacing: -.045em; margin: 14px 0 20px; }
+.intro { color: #566159; font-size: 19px; max-width: 600px; line-height: 1.6; }
+form { margin-top: 38px; }
+label { display: block; font-weight: 700; margin-bottom: 10px; }
+.form-row { display: flex; gap: 10px; }
+input, select { border: 1px solid #cbd1ca; background: white; border-radius: 8px; padding: 13px 14px; }
+input { flex: 1; min-width: 0; }
+button, .button-link { border: 0; border-radius: 8px; background: #176447; color: white; padding: 13px 20px; font-weight: 700; cursor: pointer; text-decoration: none; }
+button:disabled { opacity: .65; cursor: wait; }
+.error { color: #a52b2b; }
+
+.shell { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding: 48px 0 80px; }
+.page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+.page-header h1 { font-size: 44px; margin: 14px 0 8px; }
+.back { text-decoration: none; font-weight: 650; }
+.url { color: #68716b; word-break: break-all; }
+.status { text-transform: capitalize; border-radius: 999px; padding: 7px 12px; background: #e2e5df; font-weight: 700; }
+.status.completed { background: #d9eee4; color: #176447; }
+.status.failed { background: #f8dddd; color: #8c2222; }
+.summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 34px 0; }
+.summary div, .issue, .empty { background: white; border: 1px solid #e0e3dd; border-radius: 12px; padding: 20px; }
+.summary strong { display: block; font-size: 30px; }
+.summary span { color: #69726c; }
+.progress-wrap { margin: 32px 0; }
+.progress-label { display: flex; justify-content: space-between; margin-bottom: 9px; }
+.progress { height: 9px; background: #dde1dc; border-radius: 99px; overflow: hidden; }
+.progress div { height: 100%; background: #176447; transition: width .25s; }
+.toolbar { display: flex; gap: 10px; margin: 32px 0 18px; }
+.toolbar .button-link { margin-left: auto; }
+.issues { display: grid; gap: 12px; }
+.issue-top { display: flex; gap: 12px; color: #6b746e; text-transform: capitalize; font-size: 13px; margin-bottom: 10px; }
+.category { color: #176447; font-weight: 750; }
+.context { color: #414b45; line-height: 1.55; }
+.correction { display: flex; align-items: center; gap: 22px; background: #f5f6f2; padding: 14px; border-radius: 8px; }
+.correction span:not(.arrow) { display: grid; gap: 3px; }
+.correction small, .source { color: #737c76; }
+.arrow { color: #176447; font-weight: 800; }
+.source { font-size: 12px; margin-bottom: 0; }
+.empty { text-align: center; padding: 54px 20px; }
+.empty h2 { margin-top: 0; }
+
+@media (max-width: 640px) {
+  .form-row, .toolbar { flex-direction: column; }
+  .form-row button { width: 100%; }
+  .summary { grid-template-columns: 1fr; }
+  .page-header { flex-direction: column; }
+  .toolbar .button-link { margin-left: 0; text-align: center; }
+  .correction { align-items: flex-start; }
+}

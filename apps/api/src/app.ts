@@ -3,6 +3,13 @@ import { ZodError } from "zod";
 import { scansRouter } from "./routes/scans.js";
 
 export const app = express();
+app.use((request, response, next) => {
+  response.header("access-control-allow-origin", process.env.WEB_URL ?? "http://localhost:5173");
+  response.header("access-control-allow-headers", "content-type");
+  response.header("access-control-allow-methods", "GET,POST,OPTIONS");
+  if (request.method === "OPTIONS") return response.sendStatus(204);
+  next();
+});
 app.use(express.json());
 app.use("/api/scans", scansRouter);
 

@@ -8,10 +8,11 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace @spell-checker/api",
+    "build": "npm run build --workspaces --if-present",
     "crawl": "npm run crawl --workspace @spell-checker/api --",
     "dev": "npm run dev --workspace @spell-checker/api",
-    "test": "npm run test --workspace @spell-checker/api",
-    "typecheck": "npm run typecheck --workspace @spell-checker/api"
+    "dev:web": "npm run dev --workspace @spell-checker/web",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   }
 }
